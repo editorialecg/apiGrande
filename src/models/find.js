@@ -12,4 +12,4 @@ const find = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('word', find)
+module.exports = mongoose.model('worduploads', find)
