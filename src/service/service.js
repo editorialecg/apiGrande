@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 
-const editorialAppUrl = 'http://localhost:4000'//https://editorialapp.herokuapp.com'
+const editorialAppUrl = process.env.SERVER_EDITORIAL
 
 module.exports = {
     async blogupload(title,content) {

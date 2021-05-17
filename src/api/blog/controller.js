@@ -5,8 +5,7 @@ const { blogupload } = require('../../service/service')
 module.exports = {
     async saveblog(req, res) {
         const { title, content } = req.body
-
-        if (!title || !content) return res.status(400).send()
+        
 
         const data = await blogupload(title, content)
 
