@@ -6,10 +6,14 @@ const opt = {
     origin: [process.env.CORS]
 }
 
-const { newUser } = require('./controller')
+const { newUser, login } = require('./controller')
 
 router.post('/newuser', cors(opt), (req, res) => {
     newUser(req, res)
+})
+
+router.post('/login', cors(opt), (req,res) =>{
+    login(req,res)
 })
 
 module.exports = router

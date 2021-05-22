@@ -15,6 +15,9 @@ const user = mongoose.Schema({
     },
     created_at:{
         type: String
+    },
+    updated_at:{
+        type: String
     }
 })
 
