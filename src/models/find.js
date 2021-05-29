@@ -1,15 +1,17 @@
-const mongoose = require('mongoose')
+import { Schema, model } from 'mongoose'
 
-const find = mongoose.Schema({
+const find = Schema({
     word: {
         type: String
     },
     published: {
         type: String
     },
-    designerby:{
+    designerby: {
         type: String
     }
 })
 
-module.exports = mongoose.model('worduploads', find)
+const Word = model('worduploads', find)
+
+export default Word

@@ -1,15 +1,11 @@
-const dao = require('./DAO')
+import { createWord as _createWord, findWord as _findWord, findOneByWord as _findOneByWord } from './DAO'
 
-module.exports = {
-    async createWord(word, published, designerby) {
-        return await dao.createWord(word, published, designerby)
-    },
-
-    async findWord(word){
-        return await dao.findWord(word)
-    },
-
-    async findOneByWord(word){
-        return await dao.findOneByWord(word)
-    }
+export async function createWord(word, published, designerby) {
+    return await _createWord(word, published, designerby)
+}
+export async function findWord(word) {
+    return await _findWord(word)
+}
+export async function findOneByWord(word) {
+    return await _findOneByWord(word)
 }
