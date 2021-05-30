@@ -8,8 +8,9 @@ export default buildSchema(`
   }
 
   type Mutation{
-    newUser(name: String!, username: String!, department: String!, role: String!): User!
-    login(username: String!):User!
+    createWord(word: String! published: String! designerby: String!): Word!
+    newUser(name: String! lastname: String! email: String! username: String! password: String! department: String! role: String!): User!
+    login(username: String! password: String!):User!
   }
 
   type Word{
@@ -20,7 +21,9 @@ export default buildSchema(`
 
   type User{
     name: String!
+    lastname: String!
     username: String!
+    email: String!
     department: String!
     active: Boolean!
     role: String!

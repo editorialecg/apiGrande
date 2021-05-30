@@ -1,53 +1,77 @@
-import { getTime } from '../microservice/micro'
+import { getTime, encryptPassword, comparePassword } from '../microservice/micro'
 import { newUserModel, findUsername } from '../api/users/model'
 import { findOneByWord, createWord, findWord } from '../api/findword/model'
 
+
 export default {
-    oneWord: async (parent, args, { Word }) => {
-        const words = await findWord(args.word)
-        return words
-    },
 
-    oneUser: async (parent, args, { User }) => {
-        const find = await findUsername(args.username)
-        if(find){
-            return find
-        }
-        return false
-        /* return {
-            name: 'Ali Solozano',
-            username: 'alisolorzano',
-            department: 'Tecnologia',
-            active: true,
-            role: 'CTO',
-            created_at: '999',
-            updated_at: '999',
-            
-        } */
-    },
+	createWord: async (parent, args, { Word }) => {
 
-    newUser: async (parent, args, { User }) => {
-        const date = getTime()
-        const find = await findUsername(args.username)
-        
-        if(!find){
-            const user = await newUserModel(
-                args.name, 
-                args.username, 
-                args.department, 
-                true, 
-                args.role, 
-                date, 
-                date
-            )
-            return user
+		const find = await findOneByWord(parent.word)
+		if (!find) {
+			const create = await createWord(parent.word, parent.published, parent.designerby)
+			return create
+		}
+		return null
+	},
 
-        }
+	oneWord: async (parent, args, { Word }) => {
+		const words = await findWord(parent.word)
+		return words
+	},
 
-        return false
-    },
+	newUser: async (parent, args, { User }) => {
+		const date = getTime()
+		const find = await findUsername(parent.username)
+		const password = await encryptPassword(parent.password)
 
-    login: async (parent, args, { User }) => {
-        return args.username
-    }
+		if (!find) {
+			const user = await newUserModel(
+				parent.name,
+				parent.lastname,
+				parent.email,
+				parent.username,
+				password,
+				parent.department,
+				true,
+				parent.role,
+				date,
+				date
+			)
+			return user
+
+		}
+
+		return null
+	},
+
+	oneUser: async (parent, args, { User }) => {
+		/* const find = await findUsername(parent.username)
+		if (find) {
+			return find
+		}
+		return null */
+		return {
+			name: 'Ali R.',
+			lastname: 'Solorzano A.',
+			email: 'ali@gmail.com',
+			username: 'alisolorzanove',
+			department: 'Tecnologia',
+			active: true,
+			role: 'CTO',
+			created_at: '999',
+			updated_at: '999',
+
+		}
+	},
+
+	login: async (parent, args, { User }) => {
+		const find = await findUsername(parent.username)
+
+		if (!find) return null
+
+		if (comparePassword(parent.password, find.password)) return find
+
+		return null
+	}
 }

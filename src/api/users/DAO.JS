@@ -1,8 +1,10 @@
 const userModel = require('../../models/usersModel')
 
-export async function newUserDao(name, username, password, department, role, active, created_at, updated_at) {
+export async function newUserDao(name,lastname, email, username, password, department, role, active, created_at, updated_at) {
     return new Promise((resolve, reject) => userModel.create({
         name: name,
+        lastname: lastname,
+        email: email,
         username: username,
         password: password,
         department: department,

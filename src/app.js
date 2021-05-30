@@ -1,7 +1,8 @@
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
-const dotenv = require('dotenv').config();
+import { graphqlHTTP } from 'express-graphql'
+require('dotenv').config();
 const app = express()
 
 import schema from './graph/schema'
@@ -10,12 +11,11 @@ import Word from './models/find'
 import User from './models/usersModel'
 import Blog from './models/blogModel'
 
-import { graphqlHTTP } from 'express-graphql'
-
-
 // Middleware
 app.use(morgan('dev'))
-app.use(cors())
+app.use(cors({
+  origin: [process.env.CORS, process.env.CORS2]
+}))
 
 app.use(express.urlencoded({
     extended: true
@@ -41,4 +41,4 @@ app.use('/graphql', graphqlHTTP({
 
 
 
-module.exports = app
+export default app
