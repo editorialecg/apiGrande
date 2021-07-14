@@ -1,28 +1,27 @@
-const find = require('../../models/find')
+import Word from '../../models/find'
 
-module.exports = {
-    async createWord(word, published, designerby) {
-        return new Promise((resolve, reject) => find.create({
-            word: word,
-            published: published,
-            designerby: designerby
-        }, (err, data) => {
-            if (err) return reject(err)
-            resolve(data)
-        }))
-    },
-
-    async findWord(word) {
-        return new Promise((resolve, reject) => find.find({ word: word }, (err, data) => {
-            if (err) return reject(err)
-            resolve(data)
-        }))
-    },
-
-    async findOneByWord(word){
-        return new Promise((resolve,reject) => find.findOne({word:word}, (err,data) =>{
-            if(err) return reject(err)
-            resolve(data)
-        }))
-    }
+export async function createWord(word, published, designerby, username, created_at, updated_at) {
+	return new Promise((resolve, reject) => Word.create({
+		word: word,
+		published: published,
+		designerby: designerby,
+		username: username,
+		created_at: created_at,
+		updated_at: updated_at
+	}, (err, data) => {
+		if (err) return reject(err)
+		resolve(data)
+	}))
+}
+export async function findWord(word) {
+	return new Promise((resolve, reject) => Word.find({ word: word }, (err, data) => {
+		if (err) return reject(err)
+		resolve(data)
+	}))
+}
+export async function findOneByWord(word) {
+	return new Promise((resolve, reject) => Word.findOne({ word: word }, (err, data) => {
+		if (err) return reject(err)
+		resolve(data)
+	}))
 }

@@ -1,7 +1,6 @@
-import { set, listen, get } from '../app';
+import app from '../app';
 
-set('port', process.env.PORT); // Set Port
 
-listen(get('port'), () => {
-    console.log(`Server run on port`, get('port'));
+app.listen(process.env.PORT, () => {
+    console.log(`Server run on port`, process.env.PORT);
 });

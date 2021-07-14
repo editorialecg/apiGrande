@@ -7,6 +7,9 @@ const user = Schema({
     lastname: {
         type: String
     },
+    gender: {
+        type: String
+    },
     email: {
         type: String,
     },
@@ -21,6 +24,12 @@ const user = Schema({
     },
     active: {
         type: Boolean
+    },
+    access: {
+        marketing: {type: Boolean},
+        rrhh: {type: Boolean},
+        tech: {type: Boolean},
+        spanish: {type: Boolean}
     },
     role: {
         type: String

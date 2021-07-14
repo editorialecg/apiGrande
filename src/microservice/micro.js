@@ -1,7 +1,7 @@
-const momet = require('moment')
+const moment = require('moment')
 import { compareSync, genSaltSync, hashSync } from 'bcrypt'
 
-export async function getTime(){
+export function getTime(){
     return moment().format('MMMM Do YYYY, h:mm:ss a')
 }
 

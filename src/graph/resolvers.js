@@ -1,22 +1,25 @@
 import { getTime, encryptPassword, comparePassword } from '../microservice/micro'
-import { newUserModel, findUsername } from '../api/users/model'
+import { newUserModel, findUsername, findDepartment, updated_at } from '../api/users/model'
 import { findOneByWord, createWord, findWord } from '../api/findword/model'
 
 
 export default {
 
 	createWord: async (parent, args, { Word }) => {
-
 		const find = await findOneByWord(parent.word)
+		const date = getTime()
 		if (!find) {
-			const create = await createWord(parent.word, parent.published, parent.designerby)
+			const create = await createWord(parent.word, parent.published, parent.designerby, parent.username, date, date)
 			return create
 		}
 		return null
 	},
 
-	oneWord: async (parent, args, { Word }) => {
+	oneWord: async (parent, args, { Word }, info) => {
 		const words = await findWord(parent.word)
+		
+		if(!words) return null
+
 		return words
 	},
 
@@ -24,54 +27,68 @@ export default {
 		const date = getTime()
 		const find = await findUsername(parent.username)
 		const password = await encryptPassword(parent.password)
+		var access = {
+			marketing: parent.marketing,
+			rrhh: parent.rrhh,
+			tech: parent.tech,
+			spanish: parent.spanish
+		}
 
 		if (!find) {
 			const user = await newUserModel(
 				parent.name,
 				parent.lastname,
+				parent.gender,
 				parent.email,
 				parent.username,
 				password,
 				parent.department,
-				true,
 				parent.role,
+				true,
+				access,
 				date,
 				date
 			)
 			return user
 
+		}else{
+			
+			return null
 		}
 
-		return null
 	},
 
 	oneUser: async (parent, args, { User }) => {
-		/* const find = await findUsername(parent.username)
-		if (find) {
-			return find
-		}
-		return null */
-		return {
-			name: 'Ali R.',
-			lastname: 'Solorzano A.',
-			email: 'ali@gmail.com',
-			username: 'alisolorzanove',
-			department: 'Tecnologia',
-			active: true,
-			role: 'CTO',
-			created_at: '999',
-			updated_at: '999',
-
-		}
-	},
-
-	login: async (parent, args, { User }) => {
 		const find = await findUsername(parent.username)
 
 		if (!find) return null
 
-		if (comparePassword(parent.password, find.password)) return find
+		return await find
 
-		return null
+	},
+
+	userByDepartment: async (parent, args, { User }) => {
+		const find = await findDepartment(parent.department)
+		if (!find) return null
+
+		return find
+	},
+
+	login: async (parent, args, { User }) => {
+		const find = await findUsername(parent.username)
+		if (!find) return null
+
+		if (find.active == true) {
+			if (comparePassword(parent.password, find.password)) {
+
+				await updated_at(find.username, getTime())
+
+				return find
+			}
+		}else{
+
+			return null
+		}
+
 	}
 }

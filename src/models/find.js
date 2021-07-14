@@ -9,6 +9,15 @@ const find = Schema({
     },
     designerby: {
         type: String
+    },
+    username: {
+        type: String
+    },
+    created_at: {
+        type: String,
+    },
+    updated_at: {
+        type: String,
     }
 })
 
