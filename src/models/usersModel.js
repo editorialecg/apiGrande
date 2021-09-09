@@ -29,7 +29,8 @@ const user = Schema({
         marketing: {type: Boolean},
         rrhh: {type: Boolean},
         tech: {type: Boolean},
-        spanish: {type: Boolean}
+        spanish: {type: Boolean},
+        ebook: {type: Boolean}
     },
     role: {
         type: String

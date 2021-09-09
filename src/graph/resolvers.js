@@ -27,12 +27,7 @@ export default {
 		const date = getTime()
 		const find = await findUsername(parent.username)
 		const password = await encryptPassword(parent.password)
-		var access = {
-			marketing: parent.marketing,
-			rrhh: parent.rrhh,
-			tech: parent.tech,
-			spanish: parent.spanish
-		}
+		
 
 		if (!find) {
 			const user = await newUserModel(
@@ -45,15 +40,12 @@ export default {
 				parent.department,
 				parent.role,
 				true,
-				access,
+				parent.access,
 				date,
 				date
 			)
 			return user
 
-		}else{
-			
-			return null
 		}
 
 	},

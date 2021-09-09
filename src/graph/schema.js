@@ -9,7 +9,7 @@ export default buildSchema(`
 
   type Mutation{
 	createWord(word: String!, published: String!, designerby: String!, username: String!): Word!
-	newUser(name: String!, lastname: String!, gender: String!, email: String!, username: String!, password: String!, department: String!, role: String!, marketing: Boolean!, rrhh: Boolean!, tech: Boolean!, spanish: Boolean!): User!
+	newUser(name: String!, lastname: String!, gender: String!, email: String!, username: String!, password: String!, department: String!, role: String!, access: Access): User!
 	login(username: String!, password: String!): User!
 	oneUser(username: String!): User!
   }
@@ -31,17 +31,26 @@ export default buildSchema(`
 	email: String!
 	department: String!
 	active: Boolean!
-	access: Access!
+	access: AccessI
 	role: String!
 	created_at: String!
 	updated_at: String!
   }
 
-  type Access{
+  type AccessI{
 	marketing: Boolean
-	rrhh:  Boolean
-	tech:  Boolean
+	rrhh: Boolean
+	tech: Boolean
 	spanish: Boolean
+	ebook: Boolean
+  }
+
+  input Access{
+	marketing: Boolean
+	rrhh: Boolean
+	tech: Boolean
+	spanish: Boolean
+	ebook: Boolean
   }
 
   type Login{

@@ -3,11 +3,16 @@ import morgan from 'morgan'
 import cors from 'cors'
 import { graphqlHTTP } from 'express-graphql'
 const app = express()
-/* const http = require("http").createServer(app);
-const options = {  };
-const io = require("socket.io")(http, options);
+const http = require("http").createServer(app);
+const opt = {
+	cors: {
+		origin: "*",
+		methods: ["GET", "POST"],
+		allowedHeaders: ["content-type"]
+	}
+}
+const io = require("socket.io")(http, opt);
 
-io.on("connection", socket => {console.log('Connected')}); */
 import schema from './graph/schema'
 import resolvers from './graph/resolvers'
 import Word from './models/find'
@@ -44,4 +49,11 @@ app.use('/graphql', graphqlHTTP({
 	graphiql: true,
 }));
 
-export default app
+io.on("connect", socket => {
+	console.log('Connected ', socket.id)
+	console.log(socket)
+	io.emit('active')
+	
+})
+
+export default http
