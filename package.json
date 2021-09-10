@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/server.bundle",
     "dev": "nodemon --exec npx babel-node ./src/bin/server",
-    "prebuild": "npm version patch",
+    
     "build": "webpack --mode production",
     "test-blog": "jest --config=jest.config.json --detectOpenHandles --watch src/test/blog.test.js"
   },
