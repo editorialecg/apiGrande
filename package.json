@@ -8,7 +8,6 @@
     "dev": "nodemon --exec npx babel-node ./src/bin/server",
     "prebuild": "npm version patch",
     "build": "webpack --mode production",
-    "postbuild": "git add . && git commit -m 'Production' && git push -u origin master",
     "test-blog": "jest --config=jest.config.json --detectOpenHandles --watch src/test/blog.test.js"
   },
   "keywords": [],
