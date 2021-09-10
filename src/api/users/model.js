@@ -1,4 +1,4 @@
-import { newUserDao, findUsernameDao, updated_atDao, findDepartmentDao } from './DAO'
+const { newUserDao, findUsernameDao, updated_atDao, findDepartmentDao } = require('./')
 
 export async function newUserModel(name, lastname, gender, email, username, password, department, role, active, access, created_at, updated_at) {
     return await newUserDao(name, lastname, gender, email, username, password, department, role, active, access, created_at, updated_at)
